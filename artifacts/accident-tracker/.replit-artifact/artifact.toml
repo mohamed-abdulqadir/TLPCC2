@@ -1,0 +1,28 @@
+kind = "web"
+previewPath = "/"
+title = "Accident & Incident Tracker"
+description = "A mobile-friendly accident and incident management app for early years teams to record incidents, review trends, export the register, and track improvement actions."
+version = "1.0.0"
+id = "artifacts/accident-tracker"
+router = "path"
+
+[[services]]
+name = "web"
+paths = [ "/" ]
+localPort = 25855
+
+[services.development]
+run = "pnpm --filter @workspace/accident-tracker run dev"
+
+[services.production]
+build = [ "pnpm", "--filter", "@workspace/accident-tracker", "run", "build" ]
+serve = "static"
+publicDir = "artifacts/accident-tracker/dist/public"
+
+[[services.production.rewrites]]
+from = "/*"
+to = "/index.html"
+
+[services.env]
+PORT = "25855"
+BASE_PATH = "/"
